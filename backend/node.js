@@ -33,24 +33,7 @@ app.post("/chat", async (req, res) => {
       maxOutputTokens: 100,
     };
 
-    const safetySettings = [
-      {
-        category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT,
-        threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
-      },
-      {
-        category: HarmCategory.HARM_CATEGORY_HATE_SPEECH,
-        threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
-      },
-      {
-        category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-        threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
-      },
-      {
-        category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT,
-        threshold: HarmBlockThreshold.BLOCK_LOW_AND_ABOVE,
-      },
-    ];
+    const safetySettings = [];
 
     const model = genAI.getGenerativeModel({
       model: modelName,
@@ -71,6 +54,15 @@ app.post("/chat", async (req, res) => {
             },
             {
               text: "Você é um especialista em astronomia e exoplanetas",
+            },
+            {
+              text: "Me envie sem foramtações, apenas texto",
+            },
+            {
+              text: "Se você não souber a resposta, não tem problema, apenas responda que não sabe",
+            },
+            {
+              text: "Você só pode responder no contexto de astronomia e exoplanetas",
             },
           ],
         },
