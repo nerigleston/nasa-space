@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import Modal from "./modal";
+import ModalChat from "./modalchat";
+import Modal3D from "./modal3d";
 
 interface Planet {
-  id: number;
+  rowid: number;
   name: string;
   description: string;
   type: string;
@@ -11,93 +13,88 @@ interface Planet {
   additionalInfo: string;
 }
 
-const ModalChat: React.FC<{
-  planet: Planet;
-  onClose: () => void;
-}> = ({ planet, onClose }) => {
-  const [userMessage, setUserMessage] = useState("");
-  const [messages, setMessages] = useState<{ from: string; text: string }[]>(
-    [],
-  );
+interface PlanetsProps {
+  filteredPlanets: Planet[];
+  expandedPlanetId: number | null;
+  toggleExpand: (rowid: number) => void;
+}
 
-  const handleSendMessage = async () => {
-    if (!userMessage) return; // Não enviar se a mensagem estiver vazia
-    // Adiciona a mensagem do usuário à lista de mensagens
-    setMessages((prev) => [...prev, { from: "user", text: userMessage }]);
+const Planets: React.FC<PlanetsProps> = ({
+  filteredPlanets,
+  expandedPlanetId,
+  toggleExpand,
+}) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState<JSX.Element | null>(null);
+  const [modalTitle, setModalTitle] = useState("");
 
-    try {
-      const response = await fetch("http://localhost:3000/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userMessage: userMessage,
-          planet: planet,
-        }),
-      });
+  const openModalChat = (planet: Planet) => {
+    setModalTitle("Fale com a nossa IA");
+    setModalContent(<ModalChat planet={planet} onClose={closeModal} />);
+    setIsModalOpen(true);
+  };
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const result = await response.json();
-      // Adiciona a resposta da IA à lista de mensagens
-      setMessages((prev) => [...prev, { from: "ai", text: result.response }]);
-    } catch (error) {
-      console.error("Erro ao enviar mensagem:", error);
-      setMessages((prev) => [
-        ...prev,
-        {
-          from: "ai",
-          text: "Erro ao enviar mensagem. Tente novamente mais tarde.",
-        },
-      ]);
-    }
+  const openModal3D = (planet: Planet) => {
+    setModalTitle("Visualizar em 3D");
+    setModalContent(<Modal3D planet={planet} onClose={closeModal} />);
+    setIsModalOpen(true);
+  };
 
-    setUserMessage(""); // Limpa o campo de entrada
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalContent(null);
   };
 
   return (
-    <div>
-      <p>
-        Aqui você pode interagir com a IA para saber mais sobre {planet.name}.
-      </p>
-      <div className="space-y-2 mt-4">
-        {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`flex ${msg.from === "user" ? "justify-end" : "justify-start"}`}
-          >
-            <div
-              className={`p-2 rounded-md ${
-                msg.from === "user"
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-black"
-              } max-w-xs`}
-            >
-              {msg.text}
+    <div className="space-y-4">
+      {filteredPlanets.map((planet) => (
+        <div
+          key={planet.rowid}
+          className="p-4 bg-white rounded-md shadow-md space-y-2"
+        >
+          <div className="flex justify-between items-start">
+            <div className="w-3/4">
+              <h2 className="text-xl font-semibold">{planet.pl_name}</h2>
+              <p>{planet.description}</p>
+              <div className="flex justify-between items-center mt-2">
+                <button
+                  onClick={() => toggleExpand(planet.rowid)}
+                  className="text-blue-500 underline"
+                >
+                  {expandedPlanetId === planet.rowid
+                    ? "Ocultar mais informações"
+                    : "Mostrar mais informações"}
+                </button>
+              </div>
+            </div>
+            <div className="space-x-2">
+              <button
+                className="bg-blue-500 text-white px-4 py-1 rounded-md hover:bg-blue-600 transition-colors"
+                onClick={() => openModalChat(planet)} // Alterado para usar openModalChat
+              >
+                Fale com a nossa IA
+              </button>
+              <button
+                className="bg-green-500 text-white px-4 py-1 rounded-md hover:bg-green-600 transition-colors"
+                onClick={() => openModal3D(planet)} // Alterado para usar openModal3D
+              >
+                3D
+              </button>
             </div>
           </div>
-        ))}
-      </div>
-      <input
-        type="text"
-        value={userMessage}
-        onChange={(e) => setUserMessage(e.target.value)}
-        placeholder="Digite sua mensagem"
-        className="w-full p-2 border border-gray-300 rounded-md mt-2"
-      />
-      <button
-        className="bg-green-500 text-white px-4 py-1 rounded-md hover:bg-green-600 transition-colors mt-2"
-        onClick={handleSendMessage}
-      >
-        Enviar
-      </button>
-      <button onClick={onClose} className="mt-4 text-red-500">
-        Fechar
-      </button>
+          {expandedPlanetId === planet.rowid && (
+            <div className="p-2 bg-gray-100 rounded-md text-sm">
+              <strong>Mais informações:</strong> {planet.additionalInfo}
+            </div>
+          )}
+        </div>
+      ))}
+
+      <Modal isOpen={isModalOpen} onClose={closeModal} title={modalTitle}>
+        {modalContent}
+      </Modal>
     </div>
   );
 };
 
-export default ModalChat;
+export default Planets;

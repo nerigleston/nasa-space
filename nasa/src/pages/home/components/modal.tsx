@@ -20,7 +20,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
             className="text-gray-500 hover:text-gray-700 font-bold text-xl"
           >
             &times;{" "}
-            {/* Usando o símbolo de multiplicação como ícone de fechar */}
           </button>
         </div>
         <div className="overflow-auto">{children}</div>

@@ -13,7 +13,7 @@ export const usePlanets = () => {
 
     if (nameSearch) {
       filtered = filtered.filter((planet) =>
-        planet.name.toLowerCase().includes(nameSearch.toLowerCase()),
+        planet.pl_name.toLowerCase().includes(nameSearch.toLowerCase()),
       );
     }
 
