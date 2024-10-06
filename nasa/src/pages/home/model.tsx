@@ -17,7 +17,6 @@ export const usePlanets = () => {
     page?: number;
   }) => {
     try {
-      // Construa a query string com apenas um filtro
       let filterQuery = "";
 
       if (filter.type) {
@@ -29,13 +28,12 @@ export const usePlanets = () => {
       }
 
       const response = await fetch(
-        `http://localhost:3000/dados?${filterQuery}`,
+        `https://nasa-space-production.up.railway.app/dados?${filterQuery}`,
       );
       const data = await response.json();
       setFilteredPlanets(data.dados);
       setTotalPages(data.totalPages);
 
-      // Se estiver filtrando, forçar a página para 1
       if (!filter.type && !filter.collaboration) {
         setCurrentPage(filter.page || 1);
       }

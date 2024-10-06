@@ -43,17 +43,20 @@ const ModalChat: React.FC<ModalChatProps> = ({ planet }) => {
     const shouldSendHistory = chatHistory.length > 1;
 
     try {
-      const response = await fetch("http://localhost:3000/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://nasa-space-production.up.railway.app/chat",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userMessage: userMessage,
+            planet: planet,
+            chatHistory: shouldSendHistory ? chatHistory : null,
+          }),
         },
-        body: JSON.stringify({
-          userMessage: userMessage,
-          planet: planet,
-          chatHistory: shouldSendHistory ? chatHistory : null,
-        }),
-      });
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
