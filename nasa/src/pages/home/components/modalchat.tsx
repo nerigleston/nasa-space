@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import IA from "./../../../assets/ia.png";
 
 interface Planet {
   id: number;
@@ -23,16 +24,32 @@ const ModalChat: React.FC<{
       response: `Seja bem-vindo ao planeta ${planet.pl_name}! Como posso ajudá-lo hoje?`,
     },
   ]);
-
+  const [history, setHistory] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleSendMessage = async () => {
-    setChatHistory([
-      ...chatHistory,
-      { user: userMessage, response: "Gerando resposta..." },
-    ]);
+  // Função simples para converter Markdown para HTML
+  const parseMarkdown = (text: string) => {
+    let parsedText = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    parsedText = parsedText.replace(/\*(.*?)\*/g, "<em>$1</em>");
+    parsedText = parsedText.replace(/__(.*?)__/g, "<strong>$1</strong>");
+    parsedText = parsedText.replace(/_(.*?)_/g, "<em>$1</em>");
+    parsedText = parsedText.replace(
+      /\[(.*?)\]\((.*?)\)/g,
+      '<a href="$2">$1</a>',
+    ); // [text](link)
+    return parsedText;
+  };
 
+  const handleSendMessage = async () => {
+    if (!userMessage.trim()) return;
+
+    const newChatEntry = { user: userMessage, response: "Gerando resposta..." };
+    setChatHistory((prev) => [...prev, newChatEntry]);
     setLoading(true);
+
+    const shouldSendHistory = chatHistory.length > 1;
+    setHistory(shouldSendHistory);
+
     try {
       const response = await fetch("http://localhost:3000/chat", {
         method: "POST",
@@ -42,12 +59,14 @@ const ModalChat: React.FC<{
         body: JSON.stringify({
           userMessage: userMessage,
           planet: planet,
+          chatHistory: shouldSendHistory ? chatHistory : null,
         }),
       });
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+
       const result = await response.json();
       setChatHistory((prevChatHistory) => {
         const updatedHistory = [...prevChatHistory];
@@ -86,28 +105,26 @@ const ModalChat: React.FC<{
               </div>
             )}
             <div className="flex justify-start items-center space-x-2">
-              <img
-                src="https://img.icons8.com/ios-glyphs/30/robot-3.png"
-                alt="IA"
-                className="w-8 h-8 rounded-full"
-              />
-              <div className="bg-green-100 p-2 rounded-md max-w-xs">
-                <strong>IA:</strong> {chat.response}
-              </div>
+              <img src={IA} alt="IA" className="w-14 h-14" />
+              <div
+                className="bg-green-100 p-2 rounded-md max-w-xs"
+                dangerouslySetInnerHTML={{
+                  __html: parseMarkdown(chat.response),
+                }}
+              ></div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Container do input e botão fixo no fim */}
-      <div className="sticky bottom-0 p-2 bg-white border-t border-gray-300">
+      <div className="sticky bottom-0 p-2 bg-white ">
         <div className="flex space-x-2">
           <input
             type="text"
             value={userMessage}
             onChange={(e) => setUserMessage(e.target.value)}
             placeholder="Digite sua mensagem"
-            className="flex-grow p-2 border border-gray-300 rounded-md"
+            className="flex-grow p-2 rounded-md"
             disabled={loading}
           />
           <button

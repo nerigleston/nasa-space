@@ -4,6 +4,7 @@ import ModalChat from "./modalchat";
 import Modal3D from "./modal3d";
 
 interface Planet {
+  id: number;
   rowid: number;
   name: string;
   description: string;
@@ -11,6 +12,14 @@ interface Planet {
   distance: number;
   image: string;
   additionalInfo: string;
+  disc_pubdate: string;
+  disc_locale: string;
+  disc_facility: string;
+  disc_telescope: string;
+  disc_instrument: string;
+  discoverymethod: string;
+  disc_year: number;
+  pl_name: string;
 }
 
 interface PlanetsProps {
@@ -30,13 +39,13 @@ const Planets: React.FC<PlanetsProps> = ({
 
   const openModalChat = (planet: Planet) => {
     setModalTitle("Fale com a nossa IA");
-    setModalContent(<ModalChat planet={planet} onClose={closeModal} />);
+    setModalContent(<ModalChat planet={planet} />);
     setIsModalOpen(true);
   };
 
   const openModal3D = (planet: Planet) => {
     setModalTitle("Visualizar em 3D");
-    setModalContent(<Modal3D planet={planet} onClose={closeModal} />);
+    setModalContent(<Modal3D planet={planet} />);
     setIsModalOpen(true);
   };
 
@@ -55,7 +64,6 @@ const Planets: React.FC<PlanetsProps> = ({
           <div className="flex justify-between items-start">
             <div className="w-3/4">
               <h2 className="text-xl font-semibold">{planet.pl_name}</h2>
-              <p>{planet.description}</p>
               <div className="flex justify-between items-center mt-2">
                 <button
                   onClick={() => toggleExpand(planet.rowid)}
@@ -70,13 +78,13 @@ const Planets: React.FC<PlanetsProps> = ({
             <div className="space-x-2">
               <button
                 className="bg-blue-500 text-white px-4 py-1 rounded-md hover:bg-blue-600 transition-colors"
-                onClick={() => openModalChat(planet)} // Alterado para usar openModalChat
+                onClick={() => openModalChat(planet)}
               >
                 Fale com a nossa IA
               </button>
               <button
                 className="bg-green-500 text-white px-4 py-1 rounded-md hover:bg-green-600 transition-colors"
-                onClick={() => openModal3D(planet)} // Alterado para usar openModal3D
+                onClick={() => openModal3D(planet)}
               >
                 3D
               </button>
@@ -84,7 +92,29 @@ const Planets: React.FC<PlanetsProps> = ({
           </div>
           {expandedPlanetId === planet.rowid && (
             <div className="p-2 bg-gray-100 rounded-md text-sm">
-              <strong>Mais informações:</strong> {planet.additionalInfo}
+              <strong>Mais informações:</strong> <br />
+              <p>
+                <strong>Data de Publicação:</strong> {planet.disc_pubdate}
+              </p>
+              <p>
+                <strong>Local:</strong> {planet.disc_locale}
+              </p>
+              <p>
+                <strong>Instalação:</strong> {planet.disc_facility}
+              </p>
+              <p>
+                <strong>Telescópio:</strong> {planet.disc_telescope}
+              </p>
+              <p>
+                <strong>Instrumento:</strong> {planet.disc_instrument}
+              </p>
+              <p>
+                <strong>Método de Descoberta:</strong> {planet.discoverymethod}
+              </p>
+              <p>
+                <strong>Ano da Descoberta:</strong> {planet.disc_year}
+              </p>
+              <p>{planet.additionalInfo}</p>
             </div>
           )}
         </div>

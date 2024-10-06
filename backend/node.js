@@ -1,10 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-const {
-  GoogleGenerativeAI,
-  HarmBlockThreshold,
-  HarmCategory,
-} = require("@google/generative-ai");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const planetsDoc = require("./docs");
 
 const app = express();
 const port = 3000;
@@ -19,7 +16,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/chat", async (req, res) => {
-  const { userMessage, planet } = req.body;
+  const { userMessage, planet, chatHistory } = req.body;
 
   if (!userMessage) {
     return res
@@ -30,7 +27,10 @@ app.post("/chat", async (req, res) => {
   try {
     const modelName = "gemini-1.5-flash";
     const generationConfig = {
-      maxOutputTokens: 100,
+      temperature: 0.5,
+      top_k: 0,
+      top_p: 0.95,
+      max_output_tokens: 1000,
     };
 
     const safetySettings = [];
@@ -41,40 +41,80 @@ app.post("/chat", async (req, res) => {
       safetySettings: safetySettings,
     });
 
-    const chat = model.startChat({
-      history: [
-        {
-          role: "user",
-          parts: [
-            {
-              text: `Dados: ${JSON.stringify(planet)}`,
-            },
-            {
-              text: `Pergunta: ${userMessage}`,
-            },
-            {
-              text: "Você é um especialista em astronomia e exoplanetas",
-            },
-            {
-              text: "Me envie sem foramtações, apenas texto",
-            },
-            {
-              text: "Se você não souber a resposta, não tem problema, apenas responda que não sabe",
-            },
-            {
-              text: "Você só pode responder no contexto de astronomia e exoplanetas",
-            },
-          ],
-        },
-      ],
-    });
+    let chat;
+
+    if (chatHistory) {
+      chat = model.startChat({
+        history: [
+          {
+            role: "user",
+            parts: [
+              {
+                text: `Dados: ${JSON.stringify(planet)}`,
+              },
+              {
+                text: `Pergunta: ${userMessage}`,
+              },
+              {
+                text: `Explicação: ${planetsDoc}`,
+              },
+              {
+                text: "Você é um especialista em astronomia e exoplanetas",
+              },
+              {
+                text: "Me envie sem formatações, apenas texto",
+              },
+              {
+                text: "Se você não souber a resposta, não tem problema, apenas responda que não sabe",
+              },
+              {
+                text: "Você só pode responder no contexto de astronomia e exoplanetas",
+              },
+              // Enviar o histórico se não for null
+              {
+                text: `Histórico: ${JSON.stringify(chatHistory)}`,
+              },
+            ],
+          },
+        ],
+      });
+    } else {
+      // Se chatHistory é null
+      chat = model.startChat({
+        history: [
+          {
+            role: "user",
+            parts: [
+              {
+                text: `Dados: ${JSON.stringify(planet)}`,
+              },
+              {
+                text: `Pergunta: ${userMessage}`,
+              },
+              {
+                text: `Explicação: ${planetsDoc}`,
+              },
+              {
+                text: "Você é um especialista em astronomia e exoplanetas",
+              },
+              {
+                text: "Me envie sem formatações, apenas texto",
+              },
+              {
+                text: "Se você não souber a resposta, não tem problema, apenas responda que não sabe",
+              },
+              {
+                text: "Você só pode responder no contexto de astronomia e exoplanetas",
+              },
+            ],
+          },
+        ],
+      });
+    }
 
     const result = await chat.sendMessage(userMessage);
-
-    // O response.text() é uma função, precisamos esperar ela retornar o texto
     const text = await result.response.text();
 
-    // Retornando a resposta gerada
     res.json({ response: text });
   } catch (error) {
     console.error(error);
