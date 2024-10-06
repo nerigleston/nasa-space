@@ -10,19 +10,19 @@ export const useModal = () => {
   const [modalTitle, setModalTitle] = useState("");
 
   const openModalChat = (planet: Planet) => {
-    setModalTitle("Fale com a nossa IA");
+    setModalTitle("Talk to our AI");
     setModalContent(<ModalChat planet={planet} />);
     setIsModalOpen(true);
   };
 
   const openModal3D = (planet: Planet) => {
-    setModalTitle(`Visualizar em 3D do planeta: ${planet.pl_name}`);
+    setModalTitle(`3D View of the planet: ${planet.pl_name}`);
     setModalContent(<Modal3D planet={planet} />);
     setIsModalOpen(true);
   };
 
   const openModalReferences = (planet: Planet) => {
-    setModalTitle(`Referências de ${planet.pl_name}`);
+    setModalTitle(`References of ${planet.pl_name}`);
     setModalContent(<ModalReferences planet={planet} />);
     setIsModalOpen(true);
   };

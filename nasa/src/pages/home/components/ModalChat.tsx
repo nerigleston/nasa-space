@@ -13,7 +13,7 @@ const ModalChat: React.FC<ModalChatProps> = ({ planet }) => {
   >([
     {
       user: "",
-      response: `Seja bem-vindo ao planeta ${planet.pl_name}! Como posso ajudá-lo hoje?`,
+      response: `Welcome to planet ${planet.pl_name}! How can I assist you today?`,
     },
   ]);
   const [history, setHistory] = useState(false);
@@ -34,7 +34,10 @@ const ModalChat: React.FC<ModalChatProps> = ({ planet }) => {
   const handleSendMessage = async () => {
     if (!userMessage.trim()) return;
 
-    const newChatEntry = { user: userMessage, response: "Gerando resposta..." };
+    const newChatEntry = {
+      user: userMessage,
+      response: "Generating response...",
+    };
     setChatHistory((prev) => [...prev, newChatEntry]);
     setLoading(true);
 
@@ -65,11 +68,11 @@ const ModalChat: React.FC<ModalChatProps> = ({ planet }) => {
         return updatedHistory;
       });
     } catch (error) {
-      console.error("Erro ao enviar mensagem:", error);
+      console.error("Error sending message:", error);
       setChatHistory((prevChatHistory) => {
         const updatedHistory = [...prevChatHistory];
         updatedHistory[updatedHistory.length - 1].response =
-          "Erro ao enviar mensagem. Tente novamente mais tarde.";
+          "An error occurred while sending the message. Please try again later.";
         return updatedHistory;
       });
     } finally {
@@ -86,7 +89,7 @@ const ModalChat: React.FC<ModalChatProps> = ({ planet }) => {
             {chat.user && (
               <div className="flex justify-end items-center space-x-2">
                 <div className="bg-blue-100 p-2 rounded-md max-w-xs">
-                  <strong>Você:</strong> {chat.user}
+                  <strong>You:</strong> {chat.user}
                 </div>
                 <img
                   src="https://img.icons8.com/ios-glyphs/30/person-male.png"
@@ -114,7 +117,7 @@ const ModalChat: React.FC<ModalChatProps> = ({ planet }) => {
             type="text"
             value={userMessage}
             onChange={(e) => setUserMessage(e.target.value)}
-            placeholder="Digite sua mensagem"
+            placeholder="Type your message"
             className="flex-grow p-2 rounded-md"
             disabled={loading}
           />
@@ -125,7 +128,7 @@ const ModalChat: React.FC<ModalChatProps> = ({ planet }) => {
             onClick={handleSendMessage}
             disabled={loading}
           >
-            {loading ? "Enviando..." : "Enviar"}
+            {loading ? "Sending..." : "Send"}
           </button>
         </div>
       </div>

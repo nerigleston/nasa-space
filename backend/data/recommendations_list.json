@@ -1,0 +1,39 @@
+[
+    {
+        "name": "0.27 m CoRoT Telescope",
+        "exoplanets": [
+            "CoRoT-1 b",
+            "CoRoT-11 b",
+            "CoRoT-12 b",
+            "CoRoT-13 b",
+            "CoRoT-18 b"
+        ]
+    },
+    {
+        "name": "0.10 m Schmidt Telescope",
+        "exoplanets": [
+            "TrES-1 b",
+            "TrES-2 b",
+            "TrES-3 b",
+            "TrES-4 b",
+            "TrES-5 b"
+        ]
+    },
+    {
+        "name": "0.4 m MEarth Telescope",
+        "exoplanets": [
+            "GJ 1214 b",
+            "LHS 1140 b"
+        ]
+    },
+    {
+        "name": "0.18 m Takahashi Epsilon Astrograph",
+        "exoplanets": [
+            "HATS-70 b",
+            "HATS-40 b",
+            "HATS-67 b",
+            "HATS-1 b",
+            "HATS-62 b"
+        ]
+    }
+]

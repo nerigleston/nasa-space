@@ -8,42 +8,42 @@ interface ModalReferencesProps {
 const ModalReferences: React.FC<ModalReferencesProps> = ({ planet }) => {
   return (
     <div>
-      <h2 className="text-xl font-semibold">Dados para {planet.pl_name}</h2>
+      <h2 className="text-xl font-semibold">Data for {planet.pl_name}</h2>
       <ul className="mt-4 space-y-2">
         <li>
-          <strong>Período Orbital:</strong>
+          <strong>Orbital Period:</strong>
           <p className="text-gray-600">{planet.pl_orbper_reflink}</p>
         </li>
         <li>
-          <strong>Eixo Semi-Maior:</strong>
+          <strong>Semi-Major Axis:</strong>
           <p className="text-gray-600">{planet.pl_orbsmax_reflink}</p>
         </li>
         <li>
-          <strong>Raio do Planeta:</strong>
+          <strong>Planet Radius:</strong>
           <p className="text-gray-600">{planet.pl_rade_reflink}</p>
         </li>
         <li>
-          <strong>Massa do Planeta:</strong>
+          <strong>Planet Mass:</strong>
           <p className="text-gray-600">{planet.pl_bmasse_reflink}</p>
         </li>
         <li>
-          <strong>Densidade do Planeta:</strong>
+          <strong>Planet Density:</strong>
           <p className="text-gray-600">{planet.pl_dens_reflink}</p>
         </li>
         <li>
-          <strong>Tipo Espectral da Estrela:</strong>
+          <strong>Star Spectral Type:</strong>
           <p className="text-gray-600">{planet.st_spectype_reflink}</p>
         </li>
         <li>
-          <strong>Temperatura Efetiva da Estrela:</strong>
+          <strong>Star Effective Temperature:</strong>
           <p className="text-gray-600">{planet.st_teff_reflink}</p>
         </li>
         <li>
-          <strong>Raio da Estrela:</strong>
+          <strong>Star Radius:</strong>
           <p className="text-gray-600">{planet.st_rad_reflink}</p>
         </li>
         <li>
-          <strong>Massa da Estrela:</strong>
+          <strong>Star Mass:</strong>
           <p className="text-gray-600">{planet.st_mass_reflink}</p>
         </li>
       </ul>

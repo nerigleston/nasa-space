@@ -89,4 +89,4 @@
 
 ### Backend
 
-- **`node node.js`**: Inicia o servidor backend.
+- **`npm run dev`**: Inicia o servidor backend.

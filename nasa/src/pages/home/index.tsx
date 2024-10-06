@@ -7,8 +7,8 @@ function App() {
     filteredPlanets,
     typeFilter,
     setTypeFilter,
-    searchTerm,
-    handleSearchChange,
+    collaborationFilter,
+    setCollaborationFilter,
     toggleExpand,
     currentPage,
     totalPages,
@@ -16,41 +16,49 @@ function App() {
     expandedPlanetId,
   } = usePlanets();
 
+  // Function to set the type filter
+  const handleTypeFilterChange = (value: string) => {
+    setTypeFilter(value);
+    if (value) {
+      setCollaborationFilter("");
+    }
+  };
+
+  // Function to set the collaboration filter
+  const handleCollaborationFilterChange = (value: string) => {
+    setCollaborationFilter(value);
+    if (value) {
+      setTypeFilter("");
+    }
+  };
+
   return (
     <div className="h-screen flex flex-col">
-      <header className="flex items-center p-4 bg-gray-800 text-white justify-center">
+      <header className="flex justify-between items-center p-4 bg-gray-800 text-white">
+        <h1 className="text-2xl font-semibold">
+          Navigation for Habitable Worlds Observatory
+        </h1>
         <img src={logo} alt="Logo" className="h-12 w-12" />
       </header>
 
       <div className="flex flex-1">
         <main className="flex-1 p-4">
-          <div className="mb-4">
-            {/* <input
-              type="text"
-              placeholder="Buscar planetas..."
-              className="w-full p-2 border border-gray-300 rounded-md"
-              value={searchTerm}
-              onChange={handleSearchChange}
-            /> */}
-          </div>
-
           <Planets
             filteredPlanets={filteredPlanets}
             expandedPlanetId={expandedPlanetId}
             toggleExpand={toggleExpand}
           />
 
-          {/* Controles de Paginação */}
           <div className="flex justify-between mt-4">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
               className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md disabled:opacity-50"
             >
-              Anterior
+              Previous
             </button>
             <span>
-              Página {currentPage} de {totalPages}
+              Page {currentPage} of {totalPages}
             </span>
             <button
               onClick={() =>
@@ -59,33 +67,65 @@ function App() {
               disabled={currentPage === totalPages}
               className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md disabled:opacity-50"
             >
-              Próxima
+              Next
             </button>
           </div>
         </main>
 
         <aside className="w-1/4 p-4 bg-gray-100 border-l">
-          <h2 className="text-xl font-semibold mb-4">Filtros</h2>
+          <h2 className="text-xl font-semibold mb-4">Filters</h2>
+
           <div className="mb-4">
-            <label className="block mb-2 font-medium">Tipo de Exoplaneta</label>
+            <label className="block mb-2 font-medium">
+              Best Matches for this Telescope
+            </label>
             <select
               className="w-full p-2 border border-gray-300 rounded-md"
               value={typeFilter}
-              onChange={(e) => setTypeFilter(e.target.value)}
+              onChange={(e) => handleTypeFilterChange(e.target.value)}
             >
-              <option value="">Todos</option>
-              <option value="Gasoso">Gasoso</option>
-              <option value="Rochoso">Rochoso</option>
-              <option value="Terrestre">Terrestre</option>
+              <option value="">All</option>
+              <option value="0.1 m TESS Telescope">0.1 m TESS Telescope</option>
+              <option value="0.10 m Schmidt Telescope">
+                0.10 m Schmidt Telescope
+              </option>
+              <option value="0.18 m Takahashi Epsilon Astrograph">
+                0.18 m Takahashi Epsilon Astrograph
+              </option>
+              <option value="0.27 m CoRoT Telescope">
+                0.27 m CoRoT Telescope
+              </option>
+              <option value="0.4 m MEarth Telescope">
+                0.4 m MEarth Telescope
+              </option>
             </select>
           </div>
-
-          <button
-            className="w-full bg-blue-500 text-white py-2 rounded-md"
-            onClick={() => filterPlanets()}
-          >
-            Aplicar Filtros
-          </button>
+          {/*
+          <div className="mb-4">
+            <label className="block mb-2 font-medium">
+              Collaboration-based Recommendations
+            </label>
+            <select
+              className="w-full p-2 border border-gray-300 rounded-md"
+              value={collaborationFilter}
+              onChange={(e) => handleCollaborationFilterChange(e.target.value)}
+            >
+              <option value="">All</option>
+              <option value="0.1 m TESS Telescope">0.1 m TESS Telescope</option>
+              <option value="0.10 m Schmidt Telescope">
+                0.10 m Schmidt Telescope
+              </option>
+              <option value="0.18 m Takahashi Epsilon Astrograph">
+                0.18 m Takahashi Epsilon Astrograph
+              </option>
+              <option value="0.27 m CoRoT Telescope">
+                0.27 m CoRoT Telescope
+              </option>
+              <option value="0.4 m MEarth Telescope">
+                0.4 m MEarth Telescope
+              </option>
+            </select>
+          </div> */}
         </aside>
       </div>
     </div>

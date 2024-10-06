@@ -129,27 +129,54 @@ app.post("/chat", async (req, res) => {
 });
 
 app.get("/dados", async (req, res) => {
-  const page = parseInt(req.query.page) || 1;
+  let page = parseInt(req.query.page) || null;
   const limit = 10;
+  const telescopeName = req.query.name;
+  const collaborationName = req.query.collaboration;
 
   try {
     await client.connect();
     const database = client.db("minha_base");
     const collection = database.collection("meus_dados");
 
-    // Consulta paginada
-    const dados = await collection
-      .find()
-      .skip((page - 1) * limit)
-      .limit(limit)
-      .toArray();
+    // Crie a query com base nos filtros de telescópio (se aplicável)
+    let query = {};
 
-    // Conta o total de documentos
-    const totalDocuments = await collection.countDocuments();
+    if (telescopeName) {
+      if (telescopeName === "telescop_content_recommendations") {
+        query = { telescop_content_recommendations: { $exists: true } };
+      } else {
+        query = { telescop_content_recommendations: telescopeName };
+      }
+    }
+
+    // Adicionando a lógica para o novo filtro
+    if (collaborationName) {
+      if (collaborationName === "telescop_collaboration_recommendations") {
+        query = { telescop_collaboration_recommendations: { $exists: true } };
+      } else {
+        query = { telescop_collaboration_recommendations: collaborationName };
+      }
+    }
+
+    let dados;
+    let totalDocuments = await collection.countDocuments(query);
+
+    if (page === null) {
+      // Sem paginação
+      dados = await collection.find(query).toArray();
+    } else {
+      // Com paginação
+      dados = await collection
+        .find(query)
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .toArray();
+    }
 
     res.json({
-      page,
-      totalPages: Math.ceil(totalDocuments / limit),
+      page: page !== null ? page : null,
+      totalPages: page !== null ? Math.ceil(totalDocuments / limit) : 1,
       totalDocuments,
       dados,
     });
