@@ -24,7 +24,7 @@
 
 4. **Inicie o backend**:
    ```bash
-   node index.js
+   npm run dev
    ```
 
    O servidor backend estará disponível em `http://localhost:3000`.
