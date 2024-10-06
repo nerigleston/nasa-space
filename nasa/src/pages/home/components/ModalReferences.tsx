@@ -5,7 +5,10 @@ interface ModalReferencesProps {
   planet: Planet;
 }
 
-const extractHref = (ref: string) => {
+const extractHref = (ref: string | null | undefined) => {
+  if (!ref) {
+    return "Reference not found";
+  }
   const match = ref.match(/href=([^ ]*)/);
   return match ? match[1] : ref;
 };
