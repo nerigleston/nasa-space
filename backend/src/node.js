@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const planetsDoc = require("./docs");
+const planetsDoc = require("./../docs");
 const dotenv = require("dotenv");
 const { MongoClient } = require("mongodb");
 
