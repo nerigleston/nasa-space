@@ -1,46 +1,30 @@
-import { useState } from "react";
-import { planetsData } from "./data/Data";
+import { useState, useEffect } from "react";
 
 export const usePlanets = () => {
-  const [filteredPlanets, setFilteredPlanets] = useState(planetsData);
+  const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [typeFilter, setTypeFilter] = useState("");
   const [distanceFilter, setDistanceFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [expandedPlanetId, setExpandedPlanetId] = useState<number | null>(null);
 
-  const filterPlanets = (nameSearch = searchTerm) => {
-    let filtered = planetsData;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-    if (nameSearch) {
-      filtered = filtered.filter((planet) =>
-        planet.pl_name.toLowerCase().includes(nameSearch.toLowerCase()),
-      );
+  const fetchPlanets = async (page = 1) => {
+    try {
+      const response = await fetch(`http://localhost:3000/dados?page=${page}`);
+      const data = await response.json();
+      setFilteredPlanets(data.dados);
+      setTotalPages(data.totalPages);
+      setCurrentPage(page);
+    } catch (error) {
+      console.error("Erro ao buscar planetas:", error);
     }
-
-    if (typeFilter) {
-      filtered = filtered.filter((planet) => planet.type === typeFilter);
-    }
-
-    if (distanceFilter) {
-      switch (distanceFilter) {
-        case "close":
-          filtered = filtered.filter((planet) => planet.distance < 50);
-          break;
-        case "medium":
-          filtered = filtered.filter(
-            (planet) => planet.distance >= 50 && planet.distance <= 200,
-          );
-          break;
-        case "far":
-          filtered = filtered.filter((planet) => planet.distance > 200);
-          break;
-        default:
-          break;
-      }
-    }
-
-    setFilteredPlanets(filtered);
   };
+
+  useEffect(() => {
+    fetchPlanets(currentPage);
+  }, [currentPage, typeFilter, distanceFilter, searchTerm]);
 
   const toggleExpand = (id: number) => {
     setExpandedPlanetId(expandedPlanetId === id ? null : id);
@@ -49,7 +33,6 @@ export const usePlanets = () => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = e.target.value;
     setSearchTerm(searchValue);
-    filterPlanets(searchValue);
   };
 
   return {
@@ -61,7 +44,9 @@ export const usePlanets = () => {
     searchTerm,
     handleSearchChange,
     toggleExpand,
-    filterPlanets,
     expandedPlanetId,
+    currentPage,
+    totalPages,
+    setCurrentPage,
   };
 };

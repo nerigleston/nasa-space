@@ -49,20 +49,20 @@ const PlanetMesh: React.FC<{ planet: Planet; orbitRadius: number }> = ({
     }
   });
 
+  const planetScaleFactor = 0.04;
   return (
     <mesh ref={meshRef}>
-      <sphereGeometry args={[planet.pl_rade * 0.5, 32, 32]} />{" "}
+      <sphereGeometry args={[planet.pl_rade * planetScaleFactor, 32, 32]} />
       <meshStandardMaterial color="white" />
     </mesh>
   );
 };
 
-const StarMesh: React.FC = () => {
-  const starRef = useRef<THREE.Mesh>(null!);
-
+const StarMesh: React.FC<{ starRadius: number }> = ({ starRadius }) => {
+  const starScaleFactor = 1.0;
   return (
-    <mesh ref={starRef} position={[0, 0, 0]}>
-      <sphereGeometry args={[1.5, 32, 32]} />
+    <mesh position={[0, 0, 0]}>
+      <sphereGeometry args={[starRadius * starScaleFactor, 32, 32]} />
       <meshStandardMaterial color="yellow" />
     </mesh>
   );
@@ -84,7 +84,7 @@ const Planet3D: React.FC<{ planet: Planet }> = ({ planet }) => {
       />{" "}
       <ambientLight intensity={0.5} />
       <directionalLight position={[5, 5, 5]} intensity={1} />
-      <StarMesh />
+      <StarMesh starRadius={planet.st_rad} />
       <EllipseOrbit
         a={orbitRadius}
         b={orbitRadius}

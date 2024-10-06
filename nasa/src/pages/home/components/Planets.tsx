@@ -15,12 +15,13 @@ const Planets: React.FC<PlanetsProps> = ({
     modalTitle,
     openModalChat,
     openModal3D,
+    openModalReferences,
     closeModal,
   } = useModal();
 
   return (
     <div className="space-y-4">
-      {filteredPlanets.map((planet) => (
+      {filteredPlanets?.map((planet) => (
         <PlanetCard
           key={planet.rowid}
           planet={planet}
@@ -28,6 +29,7 @@ const Planets: React.FC<PlanetsProps> = ({
           toggleExpand={toggleExpand}
           openModalChat={openModalChat}
           openModal3D={openModal3D}
+          openModalReferences={openModalReferences}
         />
       ))}
 

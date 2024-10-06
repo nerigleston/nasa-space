@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Planet } from "./types";
 import ModalChat from "./components/ModalChat";
 import Modal3D from "./components/Modal3D";
+import ModalReferences from "./components/ModalReferences";
 
 export const useModal = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,6 +21,12 @@ export const useModal = () => {
     setIsModalOpen(true);
   };
 
+  const openModalReferences = (planet: Planet) => {
+    setModalTitle(`Referências de ${planet.pl_name}`);
+    setModalContent(<ModalReferences planet={planet} />);
+    setIsModalOpen(true);
+  };
+
   const closeModal = () => {
     setIsModalOpen(false);
     setModalContent(null);
@@ -31,6 +38,7 @@ export const useModal = () => {
     modalTitle,
     openModalChat,
     openModal3D,
+    openModalReferences,
     closeModal,
   };
 };

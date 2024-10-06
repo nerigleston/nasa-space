@@ -7,6 +7,7 @@ interface PlanetCardProps {
   toggleExpand: (rowid: number) => void;
   openModalChat: (planet: Planet) => void;
   openModal3D: (planet: Planet) => void;
+  openModalReferences: (planet: Planet) => void;
 }
 
 const PlanetCard: React.FC<PlanetCardProps> = ({
@@ -15,6 +16,7 @@ const PlanetCard: React.FC<PlanetCardProps> = ({
   toggleExpand,
   openModalChat,
   openModal3D,
+  openModalReferences,
 }) => {
   return (
     <div className="p-4 bg-white rounded-md shadow-md space-y-2">
@@ -32,7 +34,7 @@ const PlanetCard: React.FC<PlanetCardProps> = ({
             </button>
           </div>
         </div>
-        <div className="space-x-2">
+        <div className="w-2/4 flex justify-end items-start space-x-2">
           <button
             className="bg-blue-500 text-white px-4 py-1 rounded-md hover:bg-blue-600 transition-colors"
             onClick={() => openModalChat(planet)}
@@ -44,6 +46,12 @@ const PlanetCard: React.FC<PlanetCardProps> = ({
             onClick={() => openModal3D(planet)}
           >
             3D
+          </button>
+          <button
+            className="bg-purple-500 text-white px-4 py-1 rounded-md hover:bg-purple-600 transition-colors"
+            onClick={() => openModalReferences(planet)}
+          >
+            Referências
           </button>
         </div>
       </div>

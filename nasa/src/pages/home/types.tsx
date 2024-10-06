@@ -19,6 +19,15 @@ export interface Planet {
   pl_imppar: number;
   pl_orbper: number;
   st_rad: number;
+  pl_orbper_reflink: string;
+  pl_orbsmax_reflink: string;
+  pl_rade_reflink: string;
+  pl_bmasse_reflink: string;
+  pl_dens_reflink: string;
+  st_spectype_reflink: string;
+  st_teff_reflink: string;
+  st_rad_reflink: string;
+  st_mass_reflink: string;
 }
 
 export interface PlanetsProps {

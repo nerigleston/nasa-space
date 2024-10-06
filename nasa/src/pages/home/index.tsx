@@ -10,7 +10,9 @@ function App() {
     searchTerm,
     handleSearchChange,
     toggleExpand,
-    filterPlanets,
+    currentPage,
+    totalPages,
+    setCurrentPage,
     expandedPlanetId,
   } = usePlanets();
 
@@ -23,13 +25,13 @@ function App() {
       <div className="flex flex-1">
         <main className="flex-1 p-4">
           <div className="mb-4">
-            <input
+            {/* <input
               type="text"
               placeholder="Buscar planetas..."
               className="w-full p-2 border border-gray-300 rounded-md"
               value={searchTerm}
               onChange={handleSearchChange}
-            />
+            /> */}
           </div>
 
           <Planets
@@ -37,6 +39,29 @@ function App() {
             expandedPlanetId={expandedPlanetId}
             toggleExpand={toggleExpand}
           />
+
+          {/* Controles de Paginação */}
+          <div className="flex justify-between mt-4">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md disabled:opacity-50"
+            >
+              Anterior
+            </button>
+            <span>
+              Página {currentPage} de {totalPages}
+            </span>
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+              className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md disabled:opacity-50"
+            >
+              Próxima
+            </button>
+          </div>
         </main>
 
         <aside className="w-1/4 p-4 bg-gray-100 border-l">
