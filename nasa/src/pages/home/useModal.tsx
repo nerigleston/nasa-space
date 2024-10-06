@@ -10,7 +10,7 @@ export const useModal = () => {
   const [modalTitle, setModalTitle] = useState("");
 
   const openModalChat = (planet: Planet) => {
-    setModalTitle("Talk to our AI");
+    setModalTitle("Talk to Doctor Rob. Otto");
     setModalContent(<ModalChat planet={planet} />);
     setIsModalOpen(true);
   };
