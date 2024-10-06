@@ -7,9 +7,9 @@ export const usePlanets = () => {
   const [distanceFilter, setDistanceFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [expandedPlanetId, setExpandedPlanetId] = useState<number | null>(null);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false); // Estado de carregamento
 
   const fetchPlanets = async (filter: {
     type?: string;
@@ -17,6 +17,7 @@ export const usePlanets = () => {
     page?: number;
   }) => {
     try {
+      setLoading(true); // Inicia o carregamento
       let filterQuery = "";
 
       if (filter.type) {
@@ -39,6 +40,8 @@ export const usePlanets = () => {
       }
     } catch (error) {
       console.error("Erro ao buscar planetas:", error);
+    } finally {
+      setLoading(false); // Finaliza o carregamento
     }
   };
 
@@ -74,5 +77,6 @@ export const usePlanets = () => {
     currentPage,
     totalPages,
     setCurrentPage,
+    loading, // Retorna o estado de carregamento
   };
 };

@@ -13,6 +13,7 @@ function App() {
     totalPages,
     setCurrentPage,
     expandedPlanetId,
+    loading, // Adiciona o estado de carregamento
   } = usePlanets();
 
   // Function to set the type filter
@@ -34,33 +35,43 @@ function App() {
 
       <div className="flex flex-1">
         <main className="flex-1 p-4">
-          <Planets
-            filteredPlanets={filteredPlanets}
-            expandedPlanetId={expandedPlanetId}
-            toggleExpand={toggleExpand}
-          />
+          {loading ? (
+            <div className="flex justify-center items-center h-full">
+              <p>Loading...</p>
+            </div>
+          ) : (
+            <>
+              <Planets
+                filteredPlanets={filteredPlanets}
+                expandedPlanetId={expandedPlanetId}
+                toggleExpand={toggleExpand}
+              />
 
-          <div className="flex justify-between mt-4">
-            <button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md disabled:opacity-50"
-            >
-              Previous
-            </button>
-            <span>
-              Page {currentPage} of {totalPages}
-            </span>
-            <button
-              onClick={() =>
-                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-              }
-              disabled={currentPage === totalPages}
-              className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md disabled:opacity-50"
-            >
-              Next
-            </button>
-          </div>
+              <div className="flex justify-between mt-4">
+                <button
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
+                  disabled={currentPage === 1}
+                  className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md disabled:opacity-50"
+                >
+                  Previous
+                </button>
+                <span>
+                  Page {currentPage} of {totalPages}
+                </span>
+                <button
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                  disabled={currentPage === totalPages}
+                  className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md disabled:opacity-50"
+                >
+                  Next
+                </button>
+              </div>
+            </>
+          )}
         </main>
 
         <aside className="w-1/4 p-4 bg-gray-100 border-l">
