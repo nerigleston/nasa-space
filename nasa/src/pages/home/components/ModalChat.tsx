@@ -13,7 +13,7 @@ const ModalChat: React.FC<ModalChatProps> = ({ planet }) => {
   >([
     {
       user: "",
-      response: `Welcome to planet ${planet.pl_name}! How can I assist you today?`,
+      response: `Hi, I am Doctor Rob. Otto! Welcome to planet ${planet.pl_name}! How can I assist you today?`,
     },
   ]);
   const [loading, setLoading] = useState(false);
