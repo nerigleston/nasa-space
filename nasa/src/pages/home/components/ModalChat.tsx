@@ -1,20 +1,12 @@
 import React, { useState } from "react";
 import IA from "./../../../assets/ia.png";
+import { Planet } from "../types";
 
-interface Planet {
-  id: number;
-  name: string;
-  description: string;
-  type: string;
-  distance: number;
-  image: string;
-  additionalInfo: string;
+interface ModalChatProps {
+  planet: Planet;
 }
 
-const ModalChat: React.FC<{
-  planet: Planet;
-  onClose: () => void;
-}> = ({ planet }) => {
+const ModalChat: React.FC<ModalChatProps> = ({ planet }) => {
   const [userMessage, setUserMessage] = useState("");
   const [chatHistory, setChatHistory] = useState<
     { user: string; response: string }[]
@@ -27,7 +19,6 @@ const ModalChat: React.FC<{
   const [history, setHistory] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Função simples para converter Markdown para HTML
   const parseMarkdown = (text: string) => {
     let parsedText = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
     parsedText = parsedText.replace(/\*(.*?)\*/g, "<em>$1</em>");

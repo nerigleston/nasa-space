@@ -2,43 +2,7 @@ import React, { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
 import * as THREE from "three";
-
-interface Planet {
-  rowid: number;
-  pl_name: string;
-  hostname: string;
-  pl_letter: string;
-  hd_name: string;
-  hip_name: string;
-  tic_id: string;
-  gaia_id: string;
-  sy_snum: number;
-  sy_pnum: number;
-  sy_mnum: number;
-  cb_flag: number;
-  discoverymethod: string;
-  disc_year: number;
-  disc_refname: string;
-  disc_pubdate: string;
-  disc_locale: string;
-  disc_facility: string;
-  disc_telescope: string;
-  disc_instrument: string;
-  rv_flag: number;
-  pul_flag: number;
-  ptv_flag: number;
-  tran_flag: number;
-  ast_flag: number;
-  obm_flag: number;
-  micro_flag: number;
-  color: string;
-  st_spectype: string;
-  st_rad: number;
-  st_mass: number;
-  st_teff: number;
-  pl_imppar: number;
-  pl_rade: number;
-}
+import { Planet } from "../types";
 
 const generateEllipsePoints = (a: number, b: number, segments: number) => {
   const points = [];
@@ -88,7 +52,7 @@ const PlanetMesh: React.FC<{ planet: Planet; orbitRadius: number }> = ({
   return (
     <mesh ref={meshRef}>
       <sphereGeometry args={[planet.pl_rade * 0.5, 32, 32]} />{" "}
-      <meshStandardMaterial color={planet.color} />
+      <meshStandardMaterial color="white" />
     </mesh>
   );
 };

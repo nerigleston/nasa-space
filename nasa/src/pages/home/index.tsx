@@ -1,5 +1,5 @@
-import logo from "./../../assets/react.svg";
-import Planets from "./components/components";
+import logo from "./../../assets/telescope-svgrepo-com.svg";
+import Planets from "./components/Planets";
 import { usePlanets } from "./model";
 
 function App() {
@@ -16,9 +16,8 @@ function App() {
 
   return (
     <div className="h-screen flex flex-col">
-      <header className="flex items-center justify-between p-4 bg-gray-800 text-white">
-        <img src={logo} alt="Logo" className="h-10" />
-        <h1 className="text-2xl font-bold">Exploração de Exoplanetas</h1>
+      <header className="flex items-center p-4 bg-gray-800 text-white justify-center">
+        <img src={logo} alt="Logo" className="h-12 w-12" />
       </header>
 
       <div className="flex flex-1">

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { planetsData } from "./data";
+import { planetsData } from "./data/Data";
 
 export const usePlanets = () => {
   const [filteredPlanets, setFilteredPlanets] = useState(planetsData);
