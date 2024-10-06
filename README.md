@@ -1,3 +1,6 @@
+## Link DEPLOY - https://nasa-space-front.vercel.app/
+## Link TRATAMENTO DADOS E TREINAMENTO - https://colab.research.google.com/drive/1HHyQ4RdCVvyMZC7CgOuGKlPtisNrleC4?authuser=0#scrollTo=UVIS66-peLQ7
+
 ## Estrutura do Projeto
 
 - **Frontend**: Localizado na pasta `cd nasa`, ele exibe os dados e gerencia a interface do usuário. Desenvolvido com as tecnologias modernas de front-end.
