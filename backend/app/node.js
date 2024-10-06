@@ -139,7 +139,6 @@ app.get("/dados", async (req, res) => {
     const database = client.db("minha_base");
     const collection = database.collection("meus_dados");
 
-    // Crie a query com base nos filtros de telescópio (se aplicável)
     let query = {};
 
     if (telescopeName) {
@@ -150,7 +149,6 @@ app.get("/dados", async (req, res) => {
       }
     }
 
-    // Adicionando a lógica para o novo filtro
     if (collaborationName) {
       if (collaborationName === "telescop_collaboration_recommendations") {
         query = { telescop_collaboration_recommendations: { $exists: true } };
