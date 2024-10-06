@@ -2,11 +2,14 @@ const express = require("express");
 const cors = require("cors");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const planetsDoc = require("./docs");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const app = express();
 const port = 3000;
 
-const genAI = new GoogleGenerativeAI("AIzaSyAi-bAKgQcfYlfJwrWlxi02MkAWSXHzjzY");
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
 
 app.use(cors());
 app.use(express.json());
