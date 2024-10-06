@@ -16,7 +16,6 @@ const ModalChat: React.FC<ModalChatProps> = ({ planet }) => {
       response: `Welcome to planet ${planet.pl_name}! How can I assist you today?`,
     },
   ]);
-  const [history, setHistory] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const parseMarkdown = (text: string) => {
@@ -42,7 +41,6 @@ const ModalChat: React.FC<ModalChatProps> = ({ planet }) => {
     setLoading(true);
 
     const shouldSendHistory = chatHistory.length > 1;
-    setHistory(shouldSendHistory);
 
     try {
       const response = await fetch("http://localhost:3000/chat", {

@@ -3,6 +3,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
 import * as THREE from "three";
 import { Planet } from "../types";
+import { Line } from "@react-three/drei";
 
 const generateEllipsePoints = (a: number, b: number, segments: number) => {
   const points = [];
@@ -22,13 +23,11 @@ const EllipseOrbit: React.FC<{
   rotation: [number, number, number];
 }> = ({ a, b, segments, rotation }) => {
   const points = generateEllipsePoints(a, b, segments);
-  const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
 
   return (
-    <line rotation={rotation}>
-      <bufferGeometry attach="geometry" {...lineGeometry} />
+    <Line points={points} rotation={rotation}>
       <lineBasicMaterial attach="material" color="white" />
-    </line>
+    </Line>
   );
 };
 

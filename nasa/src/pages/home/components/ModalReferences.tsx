@@ -5,6 +5,11 @@ interface ModalReferencesProps {
   planet: Planet;
 }
 
+const extractHref = (ref: string) => {
+  const match = ref.match(/href=([^ ]*)/);
+  return match ? match[1] : ref;
+};
+
 const ModalReferences: React.FC<ModalReferencesProps> = ({ planet }) => {
   return (
     <div>
@@ -12,39 +17,111 @@ const ModalReferences: React.FC<ModalReferencesProps> = ({ planet }) => {
       <ul className="mt-4 space-y-2">
         <li>
           <strong>Orbital Period:</strong>
-          <p className="text-gray-600">{planet.pl_orbper_reflink}</p>
+          <p className="text-gray-600">
+            <a
+              href={extractHref(planet.pl_orbper_reflink)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {extractHref(planet.pl_orbper_reflink)}
+            </a>
+          </p>
         </li>
         <li>
           <strong>Semi-Major Axis:</strong>
-          <p className="text-gray-600">{planet.pl_orbsmax_reflink}</p>
+          <p className="text-gray-600">
+            <a
+              href={extractHref(planet.pl_orbsmax_reflink)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {extractHref(planet.pl_orbsmax_reflink)}
+            </a>
+          </p>
         </li>
         <li>
           <strong>Planet Radius:</strong>
-          <p className="text-gray-600">{planet.pl_rade_reflink}</p>
+          <p className="text-gray-600">
+            <a
+              href={extractHref(planet.pl_rade_reflink)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {extractHref(planet.pl_rade_reflink)}
+            </a>
+          </p>
         </li>
         <li>
           <strong>Planet Mass:</strong>
-          <p className="text-gray-600">{planet.pl_bmasse_reflink}</p>
+          <p className="text-gray-600">
+            <a
+              href={extractHref(planet.pl_bmasse_reflink)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {extractHref(planet.pl_bmasse_reflink)}
+            </a>
+          </p>
         </li>
         <li>
           <strong>Planet Density:</strong>
-          <p className="text-gray-600">{planet.pl_dens_reflink}</p>
+          <p className="text-gray-600">
+            <a
+              href={extractHref(planet.pl_dens_reflink)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {extractHref(planet.pl_dens_reflink)}
+            </a>
+          </p>
         </li>
         <li>
           <strong>Star Spectral Type:</strong>
-          <p className="text-gray-600">{planet.st_spectype_reflink}</p>
+          <p className="text-gray-600">
+            <a
+              href={extractHref(planet.st_spectype_reflink)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {extractHref(planet.st_spectype_reflink)}
+            </a>
+          </p>
         </li>
         <li>
           <strong>Star Effective Temperature:</strong>
-          <p className="text-gray-600">{planet.st_teff_reflink}</p>
+          <p className="text-gray-600">
+            <a
+              href={extractHref(planet.st_teff_reflink)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {extractHref(planet.st_teff_reflink)}
+            </a>
+          </p>
         </li>
         <li>
           <strong>Star Radius:</strong>
-          <p className="text-gray-600">{planet.st_rad_reflink}</p>
+          <p className="text-gray-600">
+            <a
+              href={extractHref(planet.st_rad_reflink)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {extractHref(planet.st_rad_reflink)}
+            </a>
+          </p>
         </li>
         <li>
           <strong>Star Mass:</strong>
-          <p className="text-gray-600">{planet.st_mass_reflink}</p>
+          <p className="text-gray-600">
+            <a
+              href={extractHref(planet.st_mass_reflink)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {extractHref(planet.st_mass_reflink)}
+            </a>
+          </p>
         </li>
       </ul>
     </div>

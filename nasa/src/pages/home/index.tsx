@@ -7,7 +7,6 @@ function App() {
     filteredPlanets,
     typeFilter,
     setTypeFilter,
-    collaborationFilter,
     setCollaborationFilter,
     toggleExpand,
     currentPage,
@@ -21,14 +20,6 @@ function App() {
     setTypeFilter(value);
     if (value) {
       setCollaborationFilter("");
-    }
-  };
-
-  // Function to set the collaboration filter
-  const handleCollaborationFilterChange = (value: string) => {
-    setCollaborationFilter(value);
-    if (value) {
-      setTypeFilter("");
     }
   };
 
