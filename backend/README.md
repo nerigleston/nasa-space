@@ -40,7 +40,7 @@ Certifique-se de ter o Node.js e o npm instalados na sua máquina. Além disso, 
 
 4. **Inicie o servidor**:
    ```bash
-   npm start
+   npm run dev
    ```
 
    O servidor estará disponível em `http://localhost:3000`.
