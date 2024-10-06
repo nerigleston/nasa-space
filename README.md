@@ -1,7 +1,3 @@
-# Exoplanet App
-
-Este é um projeto de chatbot sobre exoplanetas que utiliza dados da NASA e Google Generative AI para fornecer respostas sobre exoplanetas. O projeto é dividido em duas partes: o **frontend** (que consome a API da NASA e apresenta os dados) e o **backend** (que utiliza a API do Google Generative AI para gerar respostas com base em dados fornecidos).
-
 ## Estrutura do Projeto
 
 - **Frontend**: Localizado na pasta `cd nasa`, ele exibe os dados e gerencia a interface do usuário. Desenvolvido com as tecnologias modernas de front-end.
